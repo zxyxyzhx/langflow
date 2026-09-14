@@ -24,7 +24,7 @@ jobs:
     steps:
       - uses: actions/checkout@v7
       - name: "Setup Environment"
-        uses: astral-sh/setup-uv@v10.0.0
+        uses: astral-sh/setup-uv@v7
         with:
           version: latest-known
           enable-cache: true
@@ -43,7 +43,7 @@ jobs:
     steps:
       - uses: actions/checkout@v7
       - name: "Setup Environment"
-        uses: astral-sh/setup-uv@v10.0.0
+        uses: astral-sh/setup-uv@v7
         with:
           version: latest-known
           enable-cache: true
@@ -97,7 +97,7 @@ jobs:
             GIT_EDITOR=true git merge --continue
           }
       - name: "Setup Environment"
-        uses: astral-sh/setup-uv@v10.0.0
+        uses: astral-sh/setup-uv@v7
         with:
           version: latest-known
           enable-cache: true

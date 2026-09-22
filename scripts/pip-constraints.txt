@@ -1,0 +1,45 @@
+# pip 约束文件 —— 等价于 pyproject.toml 里的 [tool.uv] override-dependencies。
+#
+# 用法：pip install -c scripts/pip-constraints.txt ...
+#
+# 注意 uv 的 override 和 pip 的 constraint 语义并不完全相同：
+#   * uv override  = 强制改写依赖声明，即使和上游声明冲突也照改。
+#   * pip constraint = 只能在候选版本里做「收窄」，和上游声明冲突时 pip 会直接报错，
+#     不会帮你改写。
+# 因此这里只保留能用 constraint 表达的部分。如果将来某个上游包把版本上限压到
+# 这里的下限以下，pip 会解析失败 —— 那时需要在下面追加一条精确 pin（参考
+# langchain-litellm 那条的做法），而不是指望 pip 自动覆盖。
+#
+# 与 pyproject.toml [tool.uv] override-dependencies 保持同步。
+
+# 临时强制使用较新的 python-pptx
+python-pptx>=1.0.2
+# z3-solver 4.15.7 起不再提供 Linux wheel，在移除 codeflash 前先钉住
+z3-solver<4.15.7
+
+# 安全：强制升级，避免传递依赖把有漏洞的旧版本拖进来
+orjson>=3.11.6
+gunicorn>=25.3.0
+pypdf>=6.15.0,<7.0.0
+cryptography>=50.0.0
+nltk>=3.10.3
+Markdown>=3.8.0
+dynaconf>=3.2.13
+pillow>=12.3.0
+playwright>=1.59.0
+
+# 保住 Python 3.14 可用的下限，同时不覆盖 Opik 对 Python 3.10 的上限
+litellm>=1.93.0,<1.97; python_version < '3.11'
+litellm>=1.93.0,<2.0.0; python_version >= '3.11'
+
+# 兼容阀门：langchain-litellm 0.6.1-0.7.0 把 cryptography 压到 <49，
+# 0.5.1 是最后一个没有该上限的版本
+langchain-litellm==0.5.1
+
+# 传递依赖的 CVE 修复
+lxml>=6.1.0,<7.0.0
+mako>=1.3.12,<2.0.0
+urllib3>=2.7.0,<3.0.0
+python-liquid>=2.2.0,<3.0.0
+GitPython>=3.1.58
+h2>=4.4.1

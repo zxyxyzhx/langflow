@@ -7,7 +7,6 @@
       "type": "debugpy",
       "request": "launch",
       "module": "uvicorn",
-      "preLaunchTask": "Install Backend",
 
       "args": [
         "--factory",

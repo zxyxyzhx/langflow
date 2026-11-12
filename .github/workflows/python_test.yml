@@ -87,7 +87,7 @@ jobs:
         # Cost control: oldest + newest supported Python, matching cross-bundle-test.yml.
         python-version: ${{ fromJson(inputs.python-versions || '["3.11", "3.14", "3.15"]') }}
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
         with:
           ref: ${{ inputs.ref || github.ref }}
           persist-credentials: false
